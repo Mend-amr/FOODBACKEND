@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { UserModel } from "../../models/user.model";
-export const resetPass = async (req: Request, res: Response) => {
+export const resetPassReq = async (req: Request, res: Response) => {
   try {
     const { email } = req.body;
     const resetPass = await UserModel.create({
