@@ -3,21 +3,16 @@ import { FoodOrderModel } from "../../models/foodOrder.model";
 export const updateOrder = async (req: Request, res: Response) => {
   try {
     const { user, totalPrice, foodOrderItems, status } = req.body;
-    const foodOrderAPI = await FoodOrderModel.findByIdAndUpdate(
-      req.params.id,
-      {
-        user,
-        totalPrice,
-        foodOrderItems,
-        status,
-      },
-      { new: true },
-    );
-    if (!foodOrderAPI) {
-      return res.status(404).json({ message: "Order not found" });
-    }
-    res.status(200).json(foodOrderAPI);
+    const foodOrderAPI = await FoodOrderModel.findByIdAndUpdate({
+      user,
+      totalPrice,
+      foodOrderItems,
+      status,
+    });
+
+    res.status(200).send({ message: "Order updated", data: foodOrderAPI });
   } catch (error) {
-    res.status(500).json({ message: "Server error", error });
+    console.log(error);
+    res.status(200).send({ message: " error", error });
   }
 };

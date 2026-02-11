@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { FoodModel } from "../../models/food.model";
-export const delleteFoods = async (req: Request, res: Response) => {
+export const deleteFoods = async (req: Request, res: Response) => {
   try {
     const food = await FoodModel.findByIdAndDelete(req.params.id);
     if (!food) {

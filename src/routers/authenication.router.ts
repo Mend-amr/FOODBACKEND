@@ -1,15 +1,14 @@
-import { Request, Response } from "express";
-import { FoodModel } from "../../models/food.model";
+import { Router } from "express";
+import {
+  signInController,
+  signUpController,
+} from "../controller/authenticationApi";
+import { resetPassReq } from "../controller/authenticationApi/reset-pass-req.controller";
+import { verifyResetPass } from "../controller/authenticationApi/verify-reset-pass-req.controller";
 
-export const getfoodByID = async (req: Request, res: Response) => {
-  try {
-    const food = await FoodModel.findById(req.params.id);
+export const authenicationRouter = Router();
 
-    if (!food) {
-      return res.status(404).json({ message: "Food item not found" });
-    }
-    res.status(200).json(food);
-  } catch (error) {
-    res.status(500).json({ message: "Server error", error });
-  }
-};
+authenicationRouter.post("/sign-in", signInController);
+authenicationRouter.post("/sign-up", signUpController);
+authenicationRouter.post("/reset-pass-req", resetPassReq);
+authenicationRouter.get("/verify-reset-pass-req", verifyResetPass);

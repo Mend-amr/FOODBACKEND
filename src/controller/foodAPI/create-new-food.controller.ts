@@ -1,12 +1,16 @@
 import { Request, Response } from "express";
 import { FoodModel } from "../../models/food.model";
 
-export const newfoodBycontroller = async (req: Request, res: Response) => {
+export const CreateNewFood = async (req: Request, res: Response) => {
   try {
-    const FoodAPI = await FoodModel.findById(req.params.id);
-    if (!FoodAPI) {
-      return res.status(404).json({ message: "Food item not found" });
-    }
+    const { foodName, price, image, ingrediednts, category } = req.body;
+    const FoodAPI = await FoodModel.create({
+      foodName,
+      price,
+      image,
+      ingrediednts,
+      category,
+    });
 
     res
       .status(200)

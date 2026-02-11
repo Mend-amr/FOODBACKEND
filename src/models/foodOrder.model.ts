@@ -1,18 +1,35 @@
-import { Schema, model } from "mongoose";
-export const FoodOrderModel = model(
-  "FoodOrder",
-  new Schema({
-    foodId: { type: Schema.Types.ObjectId, ref: "Food", required: true },
+import mongoose, { models, ObjectId, Schema } from "mongoose";
+enum FoodOrderStatus {
+  PENDING = "PENDING",
+  CANCELED = "CANCELED",
+  DELIVERED = "DELIVERED",
+}
+type FoodOrderType = {
+  user: ObjectId;
+  totaLPrice: Number;
+  foodOrderItems: [];
+  status: FoodOrderStatus;
+};
+const foodOrderItems = new Schema(
+  {
+    food: { type: Schema.Types.ObjectId, ref: "Food", required: true },
     quantity: { type: Number, required: true },
-    orderDate: { type: Date, default: Date.now },
-  }),
+  },
+  { _id: false },
 );
-const foodOrderSchema = new Schema({
-  foodId: { type: Schema.Types.ObjectId, ref: "Food", required: true },
-  quantity: { type: Number, required: true },
-  orderDate: { type: Date, default: Date.now },
-});
-
-const FoodOrder = model("FoodOrder", foodOrderSchema);
-
-export default FoodOrder;
+export const FoodOrderSchema = new Schema<FoodOrderType>(
+  {
+    user: { type: Schema.Types.ObjectId, ref: "user" },
+    totaLPrice: { type: Number, required: true },
+    foodOrderItems: [{ type: foodOrderItems, required: true }],
+    status: {
+      type: String,
+      enum: Object.values(FoodOrderStatus),
+      default: FoodOrderStatus.PENDING,
+      required: true,
+    },
+  },
+  { timestamps: true },
+);
+export const FoodOrderModel =
+  models["FoodOrder"] || mongoose.model("FoodOrder", FoodOrderSchema);

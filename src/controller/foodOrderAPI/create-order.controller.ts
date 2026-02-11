@@ -1,23 +1,18 @@
 import { Request, Response } from "express";
-import { FoodModel } from "../../models/food.model";
-export const GreateOrderController = async (req: Request, res: Response) => {
-  try {
-    const { foodId, quantity } = req.body;
-    const foodItem = await FoodModel.findById(foodId);
-    if (!foodItem) {
-      return res.status(404).json({ message: "Food item not found" });
-    }
-    const orderTotal = foodItem.price * quantity;
+import { FoodOrderModel } from "../../models";
 
-    res.status(201).json({
-      message: "Order created successfully",
-      orderDetails: {
-        food: foodItem.name,
-        quantity,
-        total: orderTotal,
-      },
+export const CreateOrder = async (req: Request, res: Response) => {
+  try {
+    const { user, totalPrice, foodOrderItems, status } = req.body;
+    const foodOrderAPI = await FoodOrderModel.create({
+      user,
+      totalPrice,
+      foodOrderItems,
+      status,
     });
+    res.status(200).send({ message: "Food order created", data: foodOrderAPI });
   } catch (error) {
-    res.status(500).json({ message: "Server error", error });
+    console.log(error);
+    res.status(200).send(error);
   }
 };

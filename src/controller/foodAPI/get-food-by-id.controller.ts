@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { FoodModel } from "../../models/food.model";
+
 export const getfoodByID = async (req: Request, res: Response) => {
   try {
     const food = await FoodModel.findById(req.params.id);

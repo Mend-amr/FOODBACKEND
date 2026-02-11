@@ -1,22 +1,20 @@
-import { Schema, model } from "mongoose";
-export const FoodModel = model(
-  "Food",
-  new Schema({
-    name: { type: String, required: true },
-    calories: { type: Number, required: true },
-    protein: { type: Number, required: true },
-    carbs: { type: Number, required: true },
-    fats: { type: Number, required: true },
-  }),
+import mongoose, { Schema, models, ObjectId } from "mongoose";
+
+type FoodType = {
+  foodName: string;
+  price: number;
+  image: string;
+  ingrediednts: string;
+  category: ObjectId;
+};
+export const FoodSchema = new Schema<FoodType>(
+  {
+    foodName: { type: String, required: true, unique: true },
+    price: { type: Number, required: true },
+    image: { type: String, required: true },
+    ingrediednts: [{ type: String, required: true }],
+    category: { type: Schema.Types.ObjectId, ref: "Category" },
+  },
+  { timestamps: true },
 );
-const foodSchema = new Schema({
-  name: { type: String, required: true },
-  calories: { type: Number, required: true },
-  protein: { type: Number, required: true },
-  carbs: { type: Number, required: true },
-  fats: { type: Number, required: true },
-});
-
-const Food = model("Food", foodSchema);
-
-export default Food;
+export const FoodModel = models["Foods"] || mongoose.model("foods", FoodSchema);

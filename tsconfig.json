@@ -2,10 +2,10 @@
   "compilerOptions": {
     "target": "es6",
     "module": "commonjs",
-    "strict": false,
+    "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "outDir": "dist"
   },
-  "include": ["src", "utils/emailVerification.ts"]
+  "include": ["src"]
 }

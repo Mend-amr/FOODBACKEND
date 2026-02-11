@@ -1,17 +1,12 @@
-import { Schema } from "mongoose";
-import { model } from "mongoose";
-
-const foodCategorySchema = new Schema({
-  name: {
-    type: String,
-    required: true,
+import mongoose, { models, ObjectId, Schema } from "mongoose";
+type FoodCategoryType = {
+  categoryName: string;
+};
+export const FoodCategorySchema = new Schema<FoodCategoryType>(
+  {
+    categoryName: { type: String, required: true },
   },
-  description: {
-    type: String,
-  },
-});
-
-export default model("FoodCategory", foodCategorySchema);
-{
-  model;
-}
+  { timestamps: true },
+);
+export const FoodCategoryModel =
+  models["FoodCategory"] || mongoose.model("FoodCategory", FoodCategorySchema);

@@ -1,11 +1,17 @@
 import { Request, Response } from "express";
-import { FoodModel } from "../../models/food.model";
+
+import { FoodCategoryModel, UserModel } from "../../models";
 export const createCategory = async (req: Request, res: Response) => {
   try {
-    const { name } = req.body;
-    const newCategory = await FoodModel.create({ name });
-    res.status(201).json(newCategory);
+    const { categoryName } = req.body;
+    const bn = await FoodCategoryModel.findOne.apply({ categoryName });
+    if (bn) {
+      return res.status(400).send({ message: "iim category bn" });
+    }
+    const categoryAPI = await FoodCategoryModel.create({ categoryName });
+    res.status(200).send({ message: "category create", data: categoryAPI });
   } catch (error) {
-    res.status(500).json({ message: "Server error", error });
+    console.log(error);
+    res.status(200).send(error);
   }
 };

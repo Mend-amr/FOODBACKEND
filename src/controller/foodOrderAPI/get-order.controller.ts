@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { FoodModel } from "../../models/food.model";
 
-export const getOrderController = async (req: Request, res: Response) => {
+export const getOrder = async (req: Request, res: Response) => {
   try {
     const orders = await FoodModel.find({ userId: req.params.userId });
     if (!orders) {
