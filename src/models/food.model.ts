@@ -9,12 +9,15 @@ type FoodType = {
 };
 export const FoodSchema = new Schema<FoodType>(
   {
-    foodName: { type: String, required: true, unique: true },
+    foodName: { type: String, required: true },
     price: { type: Number, required: true },
     image: { type: String, required: true },
     ingrediednts: [{ type: String, required: true }],
-    category: { type: Schema.Types.ObjectId, ref: "Category" },
+    category: {
+      type: Schema.Types.ObjectId,
+      ref: "FoodCategory",
+    },
   },
   { timestamps: true },
 );
-export const FoodModel = models["Foods"] || mongoose.model("foods", FoodSchema);
+export const FoodModel = models["Foods"] || mongoose.model("Foods", FoodSchema);

@@ -9,5 +9,6 @@ export const foodRouter = Router();
 
 foodRouter.get("/category", getfoodByGategoryID);
 foodRouter.get("/", getfoodByID);
-foodRouter.post("/:createFood", CreateNewFood);
-foodRouter.delete("/foodId", deleteFoods);
+foodRouter.post("/create-food", CreateNewFood);
+foodRouter.delete("/:foodId", deleteFoods);
+// foodRouter.patch("./:foodId");
